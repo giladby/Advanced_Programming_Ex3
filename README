@@ -20,6 +20,11 @@ In the main program, we get a text file name as an argument, this text file cont
 We analyze the text file by first lexing it and then parse the lexed data, in the parsing process, we execute each command, line by line from the text file.
 After we are done with executing the file commands, we close the sockets and threads, free all the allocated memory, and exits the main program.
 
+In order to run this program, you need to provide a commands text file and specify there the IP and PORT of the simulator, and put it in the same directory as the main.cpp file.
+In addition, you have to put an XML file, which contains the names and sims of the chosen variables, in the relevant simulator's directory, so theirs values will be sent to the program.
+Then run the program, and give the text file name as an argument to the program.
+When it runs, open the simulator, and enjoy the flight :)
+
 
 Now we will explain each of the objects we made in the program and how we used it to achieve the project goal we explained above.
 The explanation will be seperated according to the different folders of our program and the files each folder contains:
