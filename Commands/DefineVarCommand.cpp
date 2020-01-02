@@ -1,6 +1,5 @@
 
 #include "DefineVarCommand.h"
-#include "../Expressions/Var.h"
 
 //create new var and save it in vars map, if it should be saved there
 int DefineVarCommand::execute(vector<string> strings, int index) {
@@ -19,7 +18,9 @@ int DefineVarCommand::execute(vector<string> strings, int index) {
     returnedIndex++;
     if(strings[returnedIndex] == "=") {
         v2 = inter->interpret(strings[returnedIndex + 1]);
+        // create new var
         newVar = new Var(v2->calculate(), true);
+        // delete v2 only if it's not a var with a name
         if (dynamic_cast<Var*>(v2) != nullptr) {
             if (!dynamic_cast<Var*>(v2)->hasName()) {
                 delete v2;
@@ -29,10 +30,12 @@ int DefineVarCommand::execute(vector<string> strings, int index) {
         }
     } else {
         if(strings[returnedIndex] == "->" && strings[returnedIndex + 1] == "sim") {
+            // create a sending var
             newVar = new Var(strings[returnedIndex + 2], false);
             returnedIndex++;
         } else {
             if(strings[returnedIndex] == "<-" && strings[returnedIndex + 1] == "sim") {
+                // create a receiving var
                 newVar = new Var(strings[returnedIndex + 2], true);
                 returnedIndex++;
             } else {
@@ -44,7 +47,7 @@ int DefineVarCommand::execute(vector<string> strings, int index) {
     this->addVar(varMap, newVar, varName);
     // increase the returned index by 2 (1 for the ' " '/ ' -> '/ ' <- ', and 1 more for the sim/value).
     // (in case of 'sim', in the end of the if condition checked that the sim case,
-    // we have already increase the retuned index by 1,
+    // we have already increase the returned index by 1,
     // so in each ' = '/ ' -> '/ ' <- ' case we will have to increase the index by 2)
     return returnedIndex + 2;
 }
