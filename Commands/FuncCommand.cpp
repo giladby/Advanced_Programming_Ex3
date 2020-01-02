@@ -33,6 +33,7 @@ int FuncCommand::execute(vector<string> strings, int index) {
         }
         if(strings[i] == "}") {
             open--;
+            //end of body
             if(open == 0) {
                 break;
             }
