@@ -1,7 +1,7 @@
 
 #include "FuncCommand.h"
-#include "DataHandlers/Parser.h"
-#include "DataHandlers/DataManager.h"
+#include "../DataHandlers/Parser.h"
+#include "../DataHandlers/DataManager.h"
 
 //skip over the declaration of function
 int FuncCommand::dummyExecute(vector<string> strings, int index) {

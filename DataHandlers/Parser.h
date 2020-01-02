@@ -6,7 +6,7 @@
 #include <unordered_map>
 #include <vector>
 #include <string>
-#include "Commands/Command.h"
+#include "../Commands/Command.h"
 #include "Interpreter.h"
 /**
 * Parser class

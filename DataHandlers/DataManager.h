@@ -9,11 +9,11 @@
 #include <mutex>
 #include <thread>
 #include <atomic>
-#include "Expressions/Var.h"
-#include "Expressions/Expressions.h"
-#include "Commands/Command.h"
+#include "../Expressions/Var.h"
+#include "../Expressions/Expressions.h"
+#include "../Commands/Command.h"
 #include "Interpreter.h"
-#include "Commands/FuncCommand.h"
+#include "../Commands/FuncCommand.h"
 
 using namespace std;
 

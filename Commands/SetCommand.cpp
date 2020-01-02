@@ -1,6 +1,6 @@
 
 #include "SetCommand.h"
-#include "Expressions/Var.h"
+#include "../Expressions/Var.h"
 
 //skip the setting
 int SetCommand::dummyExecute(vector<string> strings, int index) {

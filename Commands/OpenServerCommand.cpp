@@ -1,12 +1,12 @@
 
 #include "OpenServerCommand.h"
-#include "DataHandlers/DataManager.h"
+#include "../DataHandlers/DataManager.h"
 #include <iostream>
 #include <unistd.h>
 #include <netinet/in.h>
 #include <sys/socket.h>
 #include <thread>
-#include "DataHandlers/Lexer.h"
+#include "../DataHandlers/Lexer.h"
 
 //connect to the simulator's server, and save the socket number
 int OpenServerCommand::execute(vector<string> strings, int index) {

@@ -3,7 +3,7 @@
 #define EX3_NEW_IFCOMMAND_H
 
 #include "Command.h"
-#include "DataHandlers/DataManager.h"
+#include "../DataHandlers/DataManager.h"
 
 /**
 * IfCommand Class

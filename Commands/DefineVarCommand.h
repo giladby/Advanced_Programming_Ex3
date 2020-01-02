@@ -3,7 +3,7 @@
 #define EX3_NEW_DEFINEVARCOMMAND_H
 
 #include "Command.h"
-#include "DataHandlers/DataManager.h"
+#include "../DataHandlers/DataManager.h"
 
 /**
 * DefineVarCommand Class

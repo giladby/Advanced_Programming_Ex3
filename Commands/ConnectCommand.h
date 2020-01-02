@@ -4,7 +4,7 @@
 
 #include "Command.h"
 #include <thread>
-#include "DataHandlers/DataManager.h"
+#include "../DataHandlers/DataManager.h"
 
 /**
 * ConnectCommand Class

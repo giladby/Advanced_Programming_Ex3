@@ -1,11 +1,11 @@
 
 #include "Interpreter.h"
-#include "Expressions/Minus.h"
-#include "Expressions/Plus.h"
-#include "Expressions/Div.h"
-#include "Expressions/Mul.h"
-#include "Expressions/UMinus.h"
-#include "Expressions/UPlus.h"
+#include "../Expressions/Minus.h"
+#include "../Expressions/Plus.h"
+#include "../Expressions/Div.h"
+#include "../Expressions/Mul.h"
+#include "../Expressions/UMinus.h"
+#include "../Expressions/UPlus.h"
 #include <stack>
 
 // Interpreter class methods

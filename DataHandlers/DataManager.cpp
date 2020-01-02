@@ -1,15 +1,15 @@
 
 #include <unistd.h>
 #include "DataManager.h"
-#include "Commands/PrintCommand.h"
-#include "Commands/SetCommand.h"
-#include "Commands/DefineVarCommand.h"
-#include "Commands/SleepCommand.h"
-#include "Commands/OpenServerCommand.h"
-#include "Commands/LoopCommand.h"
-#include "Commands/IfCommand.h"
-#include "Commands/ConnectCommand.h"
-#include "Commands/FuncCommand.h"
+#include "../Commands/PrintCommand.h"
+#include "../Commands/SetCommand.h"
+#include "../Commands/DefineVarCommand.h"
+#include "../Commands/SleepCommand.h"
+#include "../Commands/OpenServerCommand.h"
+#include "../Commands/LoopCommand.h"
+#include "../Commands/IfCommand.h"
+#include "../Commands/ConnectCommand.h"
+#include "../Commands/FuncCommand.h"
 
 DataManager* DataManager::manager = 0;
 

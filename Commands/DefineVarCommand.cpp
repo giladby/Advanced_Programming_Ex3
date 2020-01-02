@@ -1,6 +1,6 @@
 
 #include "DefineVarCommand.h"
-#include "Expressions/Var.h"
+#include "../Expressions/Var.h"
 
 //create new var and save it in vars map, if it should be saved there
 int DefineVarCommand::execute(vector<string> strings, int index) {

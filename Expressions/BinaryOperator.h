@@ -3,7 +3,7 @@
 #define EX3_NEW_BINARYOPERATOR_H
 
 #include "Expressions.h"
-#include "DataHandlers/DataManager.h"
+#include "../DataHandlers/DataManager.h"
 
 /**
  * BinaryOperator class

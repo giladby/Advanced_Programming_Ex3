@@ -5,8 +5,8 @@
 #include <iostream>
 #include <vector>
 #include <string>
-#include "Expressions/Expressions.h"
-#include "DataHandlers/Interpreter.h"
+#include "../Expressions/Expressions.h"
+#include "../DataHandlers/Interpreter.h"
 
 using namespace std;
 
