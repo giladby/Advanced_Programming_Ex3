@@ -82,7 +82,7 @@ Expressions:
 			2. A recieving variable - its value changes by the simulator matching value,
 			   but doesn't change the simulator's values.
 			3. A changing variable - its value is not changed by the simulator,
-		       but it changes the simulator's matching value.
+			   but it changes the simulator's matching value.
 	Plus:
 		A plus expression.
 	Minus:
