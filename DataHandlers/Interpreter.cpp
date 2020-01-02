@@ -155,7 +155,8 @@ queue<string> Interpreter::toQueue(string input) {
         if(c == '(') {
             // variable/number can't be before open parenthesis
             if(gettingNumber) {
-                throw "bad input";
+                cerr << "variable/number can't appear before open parenthesis"<<endl;
+                exit(1);
             }
             open = true;
             operators.push(c);
@@ -163,13 +164,15 @@ queue<string> Interpreter::toQueue(string input) {
             if(c == ')') {
                 // close parenthesis can be in end of string, before another close parenthesis, or before an operator
                 if(!(i == (length - 1) || this->isOperator(input[i + 1]) || input[i + 1] == ')')) {
-                    throw "bad input";
+                    cerr << "parenthesis problem"<<endl;
+                    exit(1);
                 }
                 if(gettingNumber) {
                     gettingNumber = false;
                     //check that the variable/number is proper
                     if(!this->properNumber(str) && !this->properVariable(str)) {
-                        throw "bad input";
+                        cerr << "variable/number has problem"<<endl;
+                        exit(1);
                     }
                     numbersQueue.push(str);
                     str = "";
@@ -186,19 +189,22 @@ queue<string> Interpreter::toQueue(string input) {
                         gettingNumber = false;
                         //check that the variable/number is proper
                         if(!this->properNumber(str) && !this->properVariable(str)) {
-                            throw "bad input";
+                            cerr << "variable/number has problem"<<endl;
+                            exit(1);
                         }
                         numbersQueue.push(str);
                         str = "";
                     }
                     //operators can't be in end of sting or after another operator
                     if(i == (length - 1) || input[i + 1] == ')' || (i > 0 && this->isOperator(input[i - 1]))) {
-                        throw "bad input";
+                        cerr << "operators can't appear in end of sting or after another operator"<<endl;
+                        exit(1);
                     }
                     if(c == '*' || c == '/') {
                         // '*' and '/' can't be in begin of string
                         if(open || i == 0) {
-                            throw "bad input";
+                            cerr << "'*' and '/' can't appear in begin of string of after open parenthesis"<<endl;
+                            exit(1);
                         }
                         // '-'/'+' situation
                     } else {
@@ -232,7 +238,8 @@ queue<string> Interpreter::toQueue(string input) {
     //taking care variable/number in end of string
     if(gettingNumber) {
         if(!this->properNumber(str) && !this->properVariable(str)) {
-            throw "bad input";
+            cerr << "variable/number has problem"<<endl;
+            exit(1);
         }
         numbersQueue.push(str);
     }
@@ -243,6 +250,7 @@ queue<string> Interpreter::toQueue(string input) {
     return numbersQueue;
 }
 
+// convert the given mathematical string to an expression object according to the shunting yard algorithm
 Expression* Interpreter::makeAnExpression(string input) {
     stack <Expression*> exps;
     //convert the string to postfix queue
@@ -258,6 +266,9 @@ Expression* Interpreter::makeAnExpression(string input) {
         if(length == 1 && (this->isOperator(str[0]) || this->isUnaryOperator(str[0]))) {
             exp1 = exps.top();
             exps.pop();
+            // operate according to the current operator.
+            // if it's binary operator pop 2 expressions out of the stack and make the operation on them,
+            // but if it's a unary operator pop only one expression and make the operator on it.
             switch (str[0]) {
                 case '+':
                     exp2 = exps.top();
@@ -301,12 +312,12 @@ Expression* Interpreter::makeAnExpression(string input) {
     return exps.top();
 }
 
-
-
+// check if the given char is an operator
 bool Interpreter::isOperator(char c) {
     return (c == '-' || c == '*' || c == '/' || c == '+');
 }
 
+// check if the given char is an unary operator
 bool Interpreter::isUnaryOperator(char c) {
     return (c == '~' || c == '^' );
 }
@@ -331,13 +342,16 @@ bool Interpreter::isSyntaxOk(string input) {
 
 Expression* Interpreter::interpret(string str) {
     if(!this->isSyntaxOk(str)) {
-        throw "bad input";
+        cerr << "syntax problem"<<endl;
+        exit(1);
     }
     if(!this->isParenthesisOk(str)) {
-        throw "bad input";
+        cerr << "parenthesis problem"<<endl;
+        exit(1);
     }
     if(!this->isVariableHasValue(str)) {
-        throw "bad input";
+        cerr << "variable/number has problem"<<endl;
+        exit(1);
     }
     return this->makeAnExpression(str);
 }

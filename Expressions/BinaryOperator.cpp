@@ -9,8 +9,10 @@ BinaryOperator::BinaryOperator(Expression *inputLeft, Expression *inputRight) {
 }
 
 BinaryOperator::~BinaryOperator() {
+    //check if the first inner exp is var
     if(this->right != nullptr) {
         if (dynamic_cast<Var*>(this->right) != nullptr) {
+            //check if the first inner exp hasn't name (it is constant) and delete it
             if (!dynamic_cast<Var*>(this->right)->hasName()) {
                 delete this->right;
             }
@@ -18,8 +20,10 @@ BinaryOperator::~BinaryOperator() {
             delete this->right;
         }
     }
+    //check if the second inner exp is var
     if(this->left != nullptr) {
         if (dynamic_cast<Var*>(this->left) != nullptr) {
+            //check if the second inner exp hasn't name (it is constant) and delete it
             if (!dynamic_cast<Var*>(this->left)->hasName()) {
                 delete this->left;
             }
