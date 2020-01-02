@@ -18,6 +18,7 @@ Var::Var(double inputVal, bool inputHasNameFlag) {
     this->hasNameFlag = inputHasNameFlag;
 }
 
+//Ctor of variable from simulator
 Var::Var(string inputSim, bool inputRecv) {
     this->sim = inputSim;
     this->recv = inputRecv;
