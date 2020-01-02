@@ -6,17 +6,22 @@
 /**
  * Lexer Class
  */
+//get a file name and does lexing on the text of the file
 vector<string> Lexer::doLexing(const string& fileName) {
     vector<string> strings;
     ifstream file;
     file.open(fileName);
+    //if failed to open the file
     if (!file.is_open()) {
         file.close();
         exit(1);
     }
     string line;
+    //run on all the lines in the text file, line by line
     while (getline(file, line)) {
+        //removes spaces and tabs from the start and end of the line
         line = this->removeSpacesAndTabsFromEdges(line);
+        //if this is a openDataServer command line
         string token = "openDataServer";
         int pos = line.find(token);
         if (pos == 0) {
@@ -26,6 +31,7 @@ vector<string> Lexer::doLexing(const string& fileName) {
             strings.emplace_back(line);
             continue;
         }
+        //if this is a connectControlClient command line
         token = "connectControlClient";
         pos = line.find(token);
         if (pos == 0) {
@@ -37,11 +43,13 @@ vector<string> Lexer::doLexing(const string& fileName) {
             strings.emplace_back(ipAndPort[1]);
             continue;
         }
+        //if this is a var command line
         token = "var";
         pos = line.find(token);
         if (pos == 0) {
             strings.emplace_back(token);
             line = line.substr(token.length() + 1, line.length() - token.length() - 1);
+            //all the var direction options
             string varOperator1 = "->";
             string varOperator2 = "<-";
             string varOperator3 = "=";
@@ -61,6 +69,7 @@ vector<string> Lexer::doLexing(const string& fileName) {
             strings.emplace_back(varName);
             strings.emplace_back(varOperator);
             varInput = this->removeSpaces(varAndInput[1]);
+            //if the var has a sim
             token = "sim";
             pos = varInput.find(token);
             if (pos == 0) {
@@ -70,6 +79,7 @@ vector<string> Lexer::doLexing(const string& fileName) {
             strings.emplace_back(varInput);
             continue;
         }
+        //if this is a Print command line
         token = "Print";
         pos = line.find(token);
         if (pos == 0) {
@@ -82,6 +92,7 @@ vector<string> Lexer::doLexing(const string& fileName) {
             strings.emplace_back(line);
             continue;
         }
+        //if this is a Sleep command line
         token = "Sleep";
         pos = line.find(token);
         if (pos == 0) {
@@ -90,6 +101,7 @@ vector<string> Lexer::doLexing(const string& fileName) {
             strings.emplace_back(line);
             continue;
         }
+        //if this is a while or a if command line
         string whileToken = "while";
         string ifToken = "if";
         pos = line.find(whileToken);
@@ -104,6 +116,7 @@ vector<string> Lexer::doLexing(const string& fileName) {
         if (pos == 0) {
             strings.emplace_back(token);
             line = line.substr(token.length(), line.length() - token.length() - 1);
+            // all the condition options
             string comparison1 = "<";
             string comparison2 = ">";
             string comparison3 = "<=";
@@ -112,6 +125,7 @@ vector<string> Lexer::doLexing(const string& fileName) {
             string comparison6 = "!=";
             string comparison;
             vector<string> terms;
+            // get the right comparison token
             if (((unsigned) line.find(comparison1) != (unsigned) string::npos) && ((unsigned) line.find(comparison3) == (unsigned) string::npos)) {
                 comparison = comparison1;
             } else if (((unsigned) line.find(comparison2) != (unsigned) string::npos) && ((unsigned) line.find(comparison4) == (unsigned) string::npos)) {
@@ -140,12 +154,14 @@ vector<string> Lexer::doLexing(const string& fileName) {
             strings.emplace_back("{");
             continue;
         }
+        //if this just a '}' line
         token = "}";
         pos = line.find(token);
         if (pos != -1) {
             strings.emplace_back(token);
             continue;
         }
+        //if this is a set command line
         token = "=";
         pos = line.find(token);
         if (pos != -1) {
@@ -155,6 +171,7 @@ vector<string> Lexer::doLexing(const string& fileName) {
             strings.emplace_back(this->removeSpaces(terms[1]));
             continue;
         }
+        //if this is a function declaration command line
         token = "{";
         pos = line.find(token);
         if (pos != -1) {
@@ -166,6 +183,7 @@ vector<string> Lexer::doLexing(const string& fileName) {
             strings.emplace_back(token);
             continue;
         }
+        //if this is a function call command line
         string token1 = "(";
         string token2 = ")";
         if (((unsigned) line.find(token1) != (unsigned) string::npos) && ((unsigned) line.find(token2) != (unsigned) string::npos)) {
@@ -177,9 +195,11 @@ vector<string> Lexer::doLexing(const string& fileName) {
             continue;
         }
     }
+    //close the file and return the strings vector
     file.close();
     return strings;
 }
+//remove spaces from the given string
 string Lexer::removeSpaces(const string& str) {
     string result;
     for (char c : str) {
@@ -190,6 +210,7 @@ string Lexer::removeSpaces(const string& str) {
     }
     return result;
 }
+//remove spaces and tabs from the start of the given string
 string Lexer::removeSpacesAndTabsFromStart(const string &str) {
     string result;
     bool startFlag = false;
@@ -204,6 +225,7 @@ string Lexer::removeSpacesAndTabsFromStart(const string &str) {
     }
     return result;
 }
+//remove spaces and tabs from the end of the given string
 string Lexer::removeSpacesAndTabsFromEnd(const string &str) {
     string result;
     bool endFlag = true;
@@ -218,12 +240,14 @@ string Lexer::removeSpacesAndTabsFromEnd(const string &str) {
     }
     return result;
 }
+//remove spaces and tabs from the start and end of the given string
 string Lexer::removeSpacesAndTabsFromEdges(const string &str) {
     string result;
     result = this->removeSpacesAndTabsFromStart(str);
     result = this->removeSpacesAndTabsFromEnd(result);
     return result;
 }
+//split the given string by the given delimiter
 vector<string> Lexer::split(string str, const string& delimiter) {
     vector<string> strings;
     string token;

@@ -13,6 +13,7 @@
 
 DataManager* DataManager::manager = 0;
 
+// data manager ctor
 DataManager::DataManager() {
     this->inter = new Interpreter();
     this->inter->setMap(&this->varsMap);
@@ -24,15 +25,18 @@ DataManager::DataManager() {
 }
 
 DataManager::~DataManager() {
-    // close the opened sockets
+    // wait for the opened threads to close
     this->clientThread.join();
     this->serverThread.join();
+    // close the sockets
     close(this->clientSocket);
     close(this->simulatorSocket);
     delete this->inter;
+    // delete the maps
     this->deleteAllMaps();
 }
 
+// return an instance of the data manager singleton
 class DataManager* DataManager::getInstance() {
     if(!manager) {
         manager = new DataManager();
@@ -122,7 +126,7 @@ class Interpreter * DataManager::getInter() {
     return this->inter;
 }
 
-//set the sims value map
+//set the sims value map according to the xml file
 void DataManager::setSimsVector() {
     this->simsVector.emplace_back("/instrumentation/airspeed-indicator/indicated-speed-kt");
     this->simsVector.emplace_back("/sim/time/warp");
@@ -200,22 +204,27 @@ void DataManager::changeClientSocket(int val) {
     this->clientSocket = val;
 }
 
+// get the string to be sent
 string DataManager::getStringToSend() {
     return this->stringToSend;
 }
 
+// get the sending flag
 bool DataManager::getSending() {
     return this->sending;
 }
 
+// set the string to be sent
 void DataManager::setStringToSend(string str) {
     this->stringToSend = str;
 }
 
+// set the sending flag to the opposite state
 void DataManager::switchSending() {
     this->sending = !this->sending;
 }
 
+// get the is done flag
 bool DataManager::isDone() {
     return this->done;
 }
