@@ -3,7 +3,7 @@
 #include <string>
 
 /**
-* Condition function
+* Condition class
 */
 
 Condition::Condition(Expression* var1, Expression* var2, string condition) {
@@ -11,7 +11,7 @@ Condition::Condition(Expression* var1, Expression* var2, string condition) {
     this->v2 = var2;
     this->cond = condition;
 }
-
+// delete the expressions unless the expression is a var with a name, then the DataManager will delete it at the end
 Condition::~Condition() {
     if (dynamic_cast<Var*>(this->v1) != nullptr) {
         if (!dynamic_cast<Var*>(this->v1)->hasName()) {
@@ -53,7 +53,7 @@ bool Condition::getCondition() {
 }
 
 /**
-* Command function
+* Command class
 */
 
 //check if the commands map contains the given command name
