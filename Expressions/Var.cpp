@@ -10,6 +10,7 @@ Var::Var() {
     this->val = 0;
 }
 
+//Ctor for constant
 Var::Var(double inputVal, bool inputHasNameFlag) {
     this->sim = "";
     this->recv = false;
