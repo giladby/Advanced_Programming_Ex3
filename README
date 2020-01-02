@@ -1,0 +1,88 @@
+											Advanced Programming Ex3
+
+										Yuval Kittenplon and Gilad Bet Yaakov
+
+							     ****** github link: https://github.com/giladby/Advanced_Programming_Ex3 ******
+
+
+
+
+
+In this project, our goal is to fly a plane in a flight simulator named "FlightGear".
+We will do it by communicating with the simulator.
+The communication is made by sending commands to the simulator and recieving data from it.
+The sending commands operation will be made by opening a socket to the simulator, and sending our commands by the matching pattern in the simulator settings ("set <variable name> <value>").
+The recieving data operation will also be made by opening a socket to the simulator, and recieving data from it, as configured in the simulator.
+In order to get the specific 36 variables data, we placed a XML file holding the variables names and paths in the matching simulator's folder as configured in the simulator settings.
+The 2 sockets described above run parallelly by using threads, so the sending and recieving process will run in the background while we operate the main program.
+
+In the main program, we get a text file name as an argument, this text file contains all the commands we have to execute.
+We analyze the text file by first lexing it and then parse the lexed data, in the parsing process, we execute each command, line by line from the text file.
+After we are done with executing the file commands, we close the sockets and threads, free all the allocated memory, and exits the main program.
+
+
+Now we will explain each of the objects we made in the program and how we used it to achieve the project goal we explained above.
+The explanation will be seperated according to the different folders of our program and the files each folder contains:
+
+DataHandlers:
+	DataManager:
+		This object holds the main data objects of the program, initilize them, change them, and close/delete them at the end.
+		In the main class we create a singleton instance of a DataManager object, and use the same instance during the program by the different classes.
+	Lexer:
+		Read the given text file line by line and makes a dynamic string array of all the commands tokens.
+	Parser:
+		Get the command tokens string array made by the lexer, and execute each command.
+	Interpreter:
+		Recieves a string that represents a mathematical expression, and converts it to an actual Expression object we can calculate/analyze.
+
+Commands:
+	Command:
+		The interface of a command object.
+		This file also contains a Condition class, which is used in order to test a given condition in the loop/if commands. 
+	ConnetCommand:
+		Opens in a different thread a socket and connects to the simulator as a client.
+		This socket stay connected until the end of the program, and we send through it commands to the simulator in order to change its values.
+	OpenServerCommand:
+		Opens in a different thread a socket which will be used as a server for the simulator to connect to.
+		This socket stay connected until the end of the program, and through it we recieve data values that the simulator sends.
+	DefineVarCommand:
+		Creates a variable object according to the given text file.
+	FuncCommand:
+		First defines a function object command, and then execute the function when it is called in the text file.
+	IfCommand:
+		First checkes the condition it has, if the condition value is true, then execute all the inner commands, otherwise - skips the entire body.
+	LoopCommand:
+		First checkes the condition it has, if the condition value is true, then execute all the inner commands in a while loop until the condition is false, otherwise - skips the entire body.
+	SetCommand:
+		Changes the matching variable value, if this variable is a changing variable, set the relevant simulator value (by using the ConnectCommand).
+	SleepCommand:
+		Make the main thread sleep for the given miliseconds value.
+	PrintCommand:
+		Gets a string or a variable, and prints the string or the variable value to the console.
+
+Expressions:
+	Expressions:
+		The interface of an expression object.
+	BinaryOperator:
+		This is an abstract class that represents a 2 expressions expression.
+	UnaryOperator:
+		This is an abstract class that represents a single expression expression.
+	Var:
+		A basic variable expression, that represents a variable from the text file.
+		There are 3 different types of variabels:
+			1. A static variable - its value is not changed by the simulator and doesn't change the simulator's values.
+			2. A recieving variable - its value changes by the simulator matching value but doesn't change the simulator's values.
+			3. A changing variable - its value is not changed by the simulator but it changes the simulator's matching value.
+	Plus:
+		A plus expression.
+	Minus:
+		A minus expression.
+	Mul:
+		A multiplication expression.
+	Div:
+		A division expression.
+	UMinus:
+		A negative operation expression.
+	UPlus:
+		A positive operation expression.
+
