@@ -1,4 +1,3 @@
-//yuval
 #include "FuncCommand.h"
 #include "../DataHandlers/Parser.h"
 #include "../DataHandlers/DataManager.h"
