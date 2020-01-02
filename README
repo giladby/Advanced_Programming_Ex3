@@ -26,7 +26,8 @@ The explanation will be seperated according to the different folders of our prog
 
 DataHandlers:
 	DataManager:
-		This object holds the main data objects of the program, initilize them, change them, and close/delete them at the end.
+		This object holds the main data objects of the program, initilize them, change them,
+		and close/delete them at the end.
 		In the main class we create a singleton instance of a DataManager object, and use the same instance during the program by the different classes.
 	Lexer:
 		Read the given text file line by line and makes a dynamic string array of all the commands tokens.
@@ -38,23 +39,30 @@ DataHandlers:
 Commands:
 	Command:
 		The interface of a command object.
-		This file also contains a Condition class, which is used in order to test a given condition in the loop/if commands. 
+		This file also contains a Condition class, which is used in order to test a given condition in
+		the loop/if commands.
 	ConnetCommand:
 		Opens in a different thread a socket and connects to the simulator as a client.
-		This socket stay connected until the end of the program, and we send through it commands to the simulator in order to change its values.
+		This socket stay connected until the end of the program, and we send through it commands to the simulator
+		in order to change its values.
 	OpenServerCommand:
 		Opens in a different thread a socket which will be used as a server for the simulator to connect to.
-		This socket stay connected until the end of the program, and through it we recieve data values that the simulator sends.
+		This socket stay connected until the end of the program,
+		and through it we recieve data values that the simulator sends.
 	DefineVarCommand:
 		Creates a variable object according to the given text file.
 	FuncCommand:
 		First defines a function object command, and then execute the function when it is called in the text file.
 	IfCommand:
-		First checkes the condition it has, if the condition value is true, then execute all the inner commands, otherwise - skips the entire body.
+		First checkes the condition it has, if the condition value is true, then execute all the inner commands,
+		otherwise - skips the entire body.
 	LoopCommand:
-		First checkes the condition it has, if the condition value is true, then execute all the inner commands in a while loop until the condition is false, otherwise - skips the entire body.
+		First checkes the condition it has, if the condition value is true,
+		then execute all the inner commands in a while loop until the condition is false,
+		otherwise - skips the entire body.
 	SetCommand:
-		Changes the matching variable value, if this variable is a changing variable, set the relevant simulator value (by using the ConnectCommand).
+		Changes the matching variable value, if this variable is a changing variable,
+		set the relevant simulator value (by using the ConnectCommand).
 	SleepCommand:
 		Make the main thread sleep for the given miliseconds value.
 	PrintCommand:
@@ -71,8 +79,10 @@ Expressions:
 		A basic variable expression, that represents a variable from the text file.
 		There are 3 different types of variabels:
 			1. A static variable - its value is not changed by the simulator and doesn't change the simulator's values.
-			2. A recieving variable - its value changes by the simulator matching value but doesn't change the simulator's values.
-			3. A changing variable - its value is not changed by the simulator but it changes the simulator's matching value.
+			2. A recieving variable - its value changes by the simulator matching value,
+			   but doesn't change the simulator's values.
+			3. A changing variable - its value is not changed by the simulator,
+		       but it changes the simulator's matching value.
 	Plus:
 		A plus expression.
 	Minus:
