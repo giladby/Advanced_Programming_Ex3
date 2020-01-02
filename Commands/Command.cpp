@@ -1,7 +1,7 @@
 
 #include "Command.h"
 #include <string>
-//helloo
+
 /**
 * Condition class
 */
