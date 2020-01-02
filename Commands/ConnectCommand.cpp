@@ -32,6 +32,7 @@ int ConnectCommand::execute(vector<string> strings, int index) {
 int ConnectCommand::dummyExecute(vector<string> strings, int index) {
     if (strings.empty()) {
         cerr << "There are no strings"<<endl;
+        exit(1);
     }
     // increase returned index by 3 (connect + 2 for port and ip)
     return index + 3;
@@ -45,7 +46,7 @@ void ConnectCommand::connectToSimulator() {
     if (manager->getClientSocket() == -1) {
         //error
         cerr << "Could not create a socket" << endl;
-        return;
+        exit(1);
     }
 
     // we need to create a sockaddr obj to hold address of server
@@ -58,7 +59,7 @@ void ConnectCommand::connectToSimulator() {
     int is_connect = connect(manager->getClientSocket(), (struct sockaddr *)&address, sizeof(address));
     if (is_connect == -1) {
         cerr << "Could not connect to host server" << endl;
-        return;
+        exit(1);
     }
 }
 
@@ -77,6 +78,7 @@ void ConnectCommand::sendToSimulator() {
                 cerr << "Error sending message" << endl;
                 exit(1);
             } else {
+                // set the sending flag to false
                 manager->switchSending();
             }
         }

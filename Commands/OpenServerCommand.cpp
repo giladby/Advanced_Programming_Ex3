@@ -27,6 +27,7 @@ int OpenServerCommand::execute(vector<string> strings, int index) {
 int OpenServerCommand::dummyExecute(vector<string> strings, int index) {
     if (strings.empty()) {
         cerr << "There are no strings"<<endl;
+        exit(1);
     }
     // increase returned index by 3 (server + 1 for port)
     return index + 2;
@@ -40,7 +41,7 @@ void OpenServerCommand::connectToSimulator() {
     if (socketfd == -1) {
         //error
         cerr << "Could not create a socket"<<endl;
-        return;
+        exit(1);
     }
     sockaddr_in address{};
     address.sin_family = AF_INET;
@@ -49,17 +50,17 @@ void OpenServerCommand::connectToSimulator() {
     // bind to socket
     if (bind(socketfd, (struct sockaddr *) &address, sizeof(address)) == -1) {
         std::cerr<<"Could not bind the socket to an IP"<<endl;
-        return;
+        exit(1);
     }
     if (listen(socketfd, 5) == -1) {
         std::cerr<<"Error during listening command"<<endl;
-        return;
+        exit(1);
     }
     // accept a client
     manager->changeSimulatorSocket(accept(socketfd, (struct sockaddr *)&address, (socklen_t*)&address));
     if (manager->getSimulatorSocket() == -1) {
         std::cerr<<"Error accepting client"<<endl;
-        return;
+        exit(1);
     }
     close(socketfd);
 }

@@ -10,6 +10,7 @@ int SleepCommand::execute(vector<string> strings, int index) {
     Expression* exp = m->getInter()->interpret(strings[index + 1]);
     double time = exp->calculate();
     delete exp;
+    // sleep the amount of milliseconds given
     this_thread::sleep_for(chrono::milliseconds((int)time));
     return index + 2;
 }

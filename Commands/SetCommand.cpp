@@ -29,6 +29,7 @@ int SetCommand::execute(vector<string> strings, int index) {
     }
     v2 = inter->interpret(strings[index + 1]);
     newValue = v2->calculate();
+    // delete v2 only if it's not a var with a name
     if (dynamic_cast<Var*>(v2) != nullptr) {
         if (!dynamic_cast<Var*>(v2)->hasName()) {
             delete v2;
@@ -36,14 +37,17 @@ int SetCommand::execute(vector<string> strings, int index) {
     } else {
         delete v2;
     }
+    // if the var has no sim
     if(v1->getSim() == "") {
         v1->setValue(newValue);
     } else {
         if(!v1->isRecieving()) {
             // update simulator
             m->changeSim(v1->getSim(), newValue);
+            // make the str to send to the simulator
             strToSend = "set " + v1->getSim() + " " + to_string(newValue) + "\r\n";
             m->setStringToSend(strToSend);
+            // make the sending flag true
             m->switchSending();
         }
     }
