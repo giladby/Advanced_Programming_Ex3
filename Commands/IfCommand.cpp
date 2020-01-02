@@ -46,13 +46,13 @@ int IfCommand::execute(vector<string> strings, int index) {
     return returnedIndex + 1;
 }
 
-//skip over the condition body
+// skip over the condition body
 int IfCommand::dummyExecute(vector<string> strings, int index) {
     int returnedIndex = index;
     Command* c;
     DataManager *m = DataManager::getInstance();
     unordered_map<string,Command*>* commandMap = m->getCommandsMap();
-    //increase returned index for condition (if + left + condition + right)
+    // increase returned index for condition (if + left + condition + right)
     returnedIndex += 5;
     while(strings[returnedIndex] != "}") {
         if(this->isContainCommand(commandMap, strings[returnedIndex])) {

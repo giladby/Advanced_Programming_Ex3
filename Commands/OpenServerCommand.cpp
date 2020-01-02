@@ -12,6 +12,7 @@
 int OpenServerCommand::execute(vector<string> strings, int index) {
     DataManager* manager = DataManager::getInstance();
     int returnIndex = index + 1;
+    // get the port
     Expression* exp = manager->getInter()->interpret(strings[returnIndex]);
     this->port = (int) exp->calculate();
     delete exp;
@@ -45,6 +46,7 @@ void OpenServerCommand::connectToSimulator() {
     address.sin_family = AF_INET;
     address.sin_addr.s_addr = INADDR_ANY;
     address.sin_port = htons(this->port);
+    // bind to socket
     if (bind(socketfd, (struct sockaddr *) &address, sizeof(address)) == -1) {
         std::cerr<<"Could not bind the socket to an IP"<<endl;
         return;
@@ -53,6 +55,7 @@ void OpenServerCommand::connectToSimulator() {
         std::cerr<<"Error during listening command"<<endl;
         return;
     }
+    // accept a client
     manager->changeSimulatorSocket(accept(socketfd, (struct sockaddr *)&address, (socklen_t*)&address));
     if (manager->getSimulatorSocket() == -1) {
         std::cerr<<"Error accepting client"<<endl;
@@ -72,6 +75,7 @@ void OpenServerCommand::recvFromSimulator() {
     vector<string> valuesVector;
     string current = "", substr, testStr, str, temp;
     DataManager* manager = DataManager::getInstance();
+    // read data from the simulator
     int data = read(manager->getSimulatorSocket(), buffer, 1024);
     while (data != -1) {
         if (manager->isDone()) {
@@ -80,6 +84,7 @@ void OpenServerCommand::recvFromSimulator() {
         validFlag = true;
         current += buffer;
         temp = current;
+        // split chunks by '\n'
         bufferVector = lexer.split(current, "\n");
         for (unsigned int j = 0; j < bufferVector.size(); j++) {
             str = bufferVector[j];
@@ -87,7 +92,7 @@ void OpenServerCommand::recvFromSimulator() {
             if(str == "") {
                 break;
             }
-            //the last chunk is cut sometimes, and if so - run over the chunk and remove the bad characters.
+            //the last chunk get cut sometimes, and if so - run over the chunk and remove the bad characters.
             if(j == bufferVector.size() - 1) {
                 for(unsigned int i = 0; i < str.length(); i++) {
                     testChar = str[i];
@@ -103,7 +108,9 @@ void OpenServerCommand::recvFromSimulator() {
                     break;
                 }
             }
+            // get the values by splitting on every ','
             valuesVector = lexer.split(str, ",");
+            // update the values only if there is exactly 36 values
             if(valuesVector.size() == 36) {
                 manager->updateSimsValues(valuesVector);
             }

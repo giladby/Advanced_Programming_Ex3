@@ -45,6 +45,7 @@ int FuncCommand::execute(vector<string> strings, int index) {
     return i + 1;
 }
 
+// Func ctor
 Func::Func(vector<string> inputCommands, string inputVar) {
     this->commands = inputCommands;
     this->var = inputVar;
