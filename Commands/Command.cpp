@@ -75,19 +75,3 @@ bool Command::isContainVar(unordered_map<string, class Var *> * varMap, string s
 void Command::addVar(unordered_map<string, class Var *>* varMap, class Var * newVar, string str) {
     (*varMap)[str] = newVar;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
