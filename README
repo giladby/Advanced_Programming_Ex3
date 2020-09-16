@@ -3,9 +3,6 @@ Advanced Programming Ex3
 Yuval Kittenplon and Gilad Bet Yaakov
 
 
-
-
-
 In this project, our goal is to fly a plane in a flight simulator named "FlightGear".
 We will do it by communicating with the simulator.
 The communication is made by sending commands to the simulator and recieving data from it.
